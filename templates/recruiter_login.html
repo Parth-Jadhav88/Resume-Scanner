@@ -1,0 +1,129 @@
+ <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Recruiter Login</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: #0f1115;
+      color: #e3e3e3;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background-image: radial-gradient(circle at top left, #1f2a3a 20%, transparent),
+                        radial-gradient(circle at bottom right, #13232f 25%, transparent);
+    }
+
+    .container {
+      background-color: #1a1d23;
+      padding: 45px 35px;
+      border-radius: 18px;
+      width: 400px;
+      box-shadow: 0 0 25px rgba(0, 255, 255, 0.08);
+      text-align: center;
+      transition: 0.3s ease;
+    }
+
+    h2 {
+      font-size: 26px;
+      margin-bottom: 25px;
+      color: #2de2e6;
+      text-shadow: 0 0 5px #2de2e6;
+      letter-spacing: 1px;
+    }
+
+    input {
+      width: 90%;
+      padding: 12px;
+      margin: 12px 0;
+      border: none;
+      border-radius: 10px;
+      font-size: 15px;
+      background-color: #2b2f38;
+      color: #fff;
+      outline: none;
+      transition: 0.2s;
+    }
+
+    input::placeholder {
+      color: #999;
+    }
+
+    input:focus {
+      background-color: #323844;
+      box-shadow: 0 0 0 2px #2de2e6;
+    }
+
+    button {
+      margin-top: 20px;
+      padding: 12px 30px;
+      border: none;
+      border-radius: 10px;
+      background-color: #2de2e6;
+      color: #000;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #1fbfc2;
+    }
+
+    .error {
+      color: #ff4d6d;
+      margin-top: 15px;
+      font-size: 15px;
+    }
+
+    .success {
+      margin-top: 25px;
+      font-size: 18px;
+      font-weight: bold;
+      color: #00ffaa;
+      animation: fadeIn 0.4s ease-in-out;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-10px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Subtle gradient line divider */
+    .divider {
+      width: 60px;
+      height: 3px;
+      background: linear-gradient(to right, #00ffaa, #2de2e6);
+      margin: 10px auto 25px;
+      border-radius: 2px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <h2>Recruiter Login</h2>
+    <div class="divider"></div>
+
+    {% if show_result and success %}
+      <p class="success">✅ Login Successful! Welcome, HR.</p>
+    {% else %}
+      <form method="POST">
+        <input type="text" name="email" placeholder="Enter your email" required>
+        <input type="password" name="password" placeholder="Enter your password" required>
+        <button type="submit">Login</button>
+      </form>
+
+      {% if show_result and error %}
+        <p class="error">{{ error }}</p>
+      {% endif %}
+    {% endif %}
+  </div>
+
+</body>
+</html> 

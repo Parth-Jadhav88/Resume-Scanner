@@ -1,0 +1,122 @@
+<!-- <form method="POST" action="/register">
+  <input type="text" name="name" placeholder="Full Name" required><br>
+  <input type="email" name="email" placeholder="Email" required><br>
+  <input type="password" name="password" placeholder="Password" required><br>
+  <button type="submit">Register</button>
+</form> -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Candidate Registration</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: #fff;
+    }
+
+    .container {
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(10px);
+      border-radius: 20px;
+      box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+      padding: 40px;
+      width: 100%;
+      max-width: 400px;
+      animation: slideIn 1s ease-out forwards;
+      opacity: 0;
+      transform: translateY(50px);
+    }
+
+    @keyframes slideIn {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 20px;
+      font-size: 26px;
+      color: #f9f9f9;
+      letter-spacing: 1px;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    input[type="password"] {
+      width: 100%;
+      padding: 12px 15px;
+      margin: 10px 0;
+      border: none;
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.2);
+      color: #fff;
+      font-size: 16px;
+    }
+
+    input::placeholder {
+      color: #ccc;
+    }
+
+    button {
+      width: 100%;
+      padding: 12px;
+      background-color: #00c6ff;
+      background-image: linear-gradient(120deg, #00c6ff, #0072ff);
+      border: none;
+      border-radius: 8px;
+      color: white;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background 0.3s ease;
+      margin-top: 20px;
+    }
+
+    button:hover {
+      background-image: linear-gradient(120deg, #0072ff, #00c6ff);
+    }
+
+    .note {
+      margin-top: 15px;
+      font-size: 14px;
+      text-align: center;
+      color: #bbb;
+    }
+
+    .note a {
+      color: #00c6ff;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    .note a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>🚀 Candidate Sign-Up</h2>
+    <form method="POST" action="/register">
+      <input type="text" name="name" placeholder="Full Name" required>
+      <input type="email" name="email" placeholder="Email Address" required>
+      <input type="password" name="password" placeholder="Password" required>
+      <button type="submit">Register</button>
+    </form>
+    <div class="note">
+      Already have an account?
+      <a href="/candidate/login">Login</a>
+    </div>
+  </div>
+</body>
+</html>

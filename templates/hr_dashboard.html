@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>HR Dashboard - Resume Matcher</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', sans-serif;
+    }
+
+    body {
+      background: linear-gradient(to bottom, #0f172a, #1e293b);
+      color: #fff;
+      padding: 60px 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
+    }
+
+    h1 {
+      font-size: 2.5rem;
+      color: #00ffc8;
+      margin-bottom: 40px;
+      text-shadow: 0 0 10px rgba(0, 255, 200, 0.4);
+    }
+
+    .form-box {
+      background-color: rgba(255, 255, 255, 0.05);
+      padding: 40px;
+      border-radius: 16px;
+      width: 90%;
+      max-width: 700px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+      animation: fadeIn 0.9s ease;
+    }
+
+    label {
+      font-size: 1.1rem;
+      color: #cbd5e1;
+    }
+
+    textarea {
+      width: 100%;
+      padding: 15px;
+      font-size: 1rem;
+      border-radius: 10px;
+      border: none;
+      margin-top: 10px;
+      background: #f1f5f9;
+      color: #111827;
+      resize: vertical;
+    }
+
+    button {
+      margin-top: 25px;
+      background: linear-gradient(135deg, #34d399, #3b82f6);
+      color: white;
+      padding: 12px 28px;
+      border: none;
+      border-radius: 10px;
+      font-size: 1.1rem;
+      font-weight: 600;
+      cursor: pointer;
+      box-shadow: 0 6px 14px rgba(59, 130, 246, 0.4);
+      transition: all 0.3s ease;
+    }
+
+    button:hover {
+      transform: scale(1.05);
+      box-shadow: 0 10px 24px rgba(59, 130, 246, 0.6);
+    }
+
+    .view-btn {
+      margin-top: 60px;
+      background: transparent;
+      color: #00ffc8;
+      font-size: 1rem;
+      text-decoration: underline;
+      border: none;
+      cursor: pointer;
+    }
+
+    .view-btn:hover {
+      color: #66ffe6;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+
+  <h1>🔍 Resume Matching Portal</h1>
+
+  <div class="form-box">
+    <form action="/match-resumes" method="POST">
+      <label for="required_skills">Paste Required Skills / Job Description:</label><br><br>
+      <textarea name="required_skills" rows="6" placeholder="e.g. Python, Machine Learning, SQL..." required></textarea><br>
+      <button type="submit">Match Resumes</button>
+    </form>
+  </div>
+
+  <form action="/view-all-resumes" method="GET">
+    <button class="view-btn">📂 View All Uploaded Resumes</button>
+  </form>
+
+</body>
+</html>

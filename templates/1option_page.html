@@ -1,0 +1,157 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Resume Scanner Login</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(to right, #0f2027, #203a43, #2c5364);
+      color: #fff;
+      text-align: center;
+      padding: 100px;
+    }
+
+    h1 {
+      font-size: 40px;
+      margin-bottom: 10px;
+    }
+
+    p.tagline {
+      font-size: 20px;
+      color: #ccc;
+      margin-bottom: 50px;
+    }
+
+    #loginOptions {
+      display: none;
+      margin-top: 30px;
+    }
+
+    .btn, .login-choice {
+      background-color: #00c6ff;
+      border: none;
+      padding: 12px 30px;
+      font-size: 18px;
+      color: white;
+      border-radius: 8px;
+      cursor: pointer;
+      margin: 10px;
+      transition: 0.3s ease;
+    }
+
+    .btn:hover, .login-choice:hover {
+      background-color: #007ea7;
+    }
+  </style>
+</head>
+<body>
+  <h1>Welcome to Resume Scanner</h1>
+  <p class="tagline">Bridging Talent with Opportunity — Empowering Recruiters & Candidates</p>
+
+  <button class="btn" onclick="showLoginOptions()">Login</button>
+
+  <div id="loginOptions">
+    <a href="/recruiter-login"><button class="login-choice">Recruiter Login</button></a>
+    <a href="/candidate-login"><button class="login-choice">Candidate Login</button></a>
+  </div>
+
+  <script>
+    function showLoginOptions() {
+      document.getElementById("loginOptions").style.display = "block";
+    }
+  </script>
+</body>
+</html> -->
+
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Resume Scanner Login</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', sans-serif;
+    }
+
+    body {
+      height: 100vh;
+      background: linear-gradient(135deg, #0f172a, #203a43, #2c5364);
+      color: #ffffff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      text-align: center;
+      padding: 40px;
+    }
+
+    h1 {
+      font-size: 3rem;
+      margin-bottom: 12px;
+      text-shadow: 0 0 10px rgba(0, 198, 255, 0.6);
+    }
+
+    .tagline {
+      font-size: 1.2rem;
+      color: #cbd5e1;
+      margin-bottom: 40px;
+      max-width: 600px;
+    }
+
+    .btn, .login-choice {
+      background: linear-gradient(135deg, #00c6ff, #007ea7);
+      color: white;
+      border: none;
+      padding: 14px 32px;
+      font-size: 18px;
+      border-radius: 10px;
+      cursor: pointer;
+      margin: 12px;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 15px rgba(0, 198, 255, 0.3);
+    }
+
+    .btn:hover, .login-choice:hover {
+      transform: translateY(-2px);
+      background: linear-gradient(135deg, #007ea7, #00c6ff);
+      box-shadow: 0 6px 20px rgba(0, 198, 255, 0.5);
+    }
+
+    #loginOptions {
+      margin-top: 20px;
+      display: none;
+      animation: fadeIn 0.6s ease-in-out;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-10px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+  <h1>🚀 Welcome to Smart Resume Scanner</h1>
+  <p class="tagline">Bridging Talent with Opportunity — Empowering <strong>Recruiters</strong> & <strong>Candidates</strong> using AI</p>
+
+  <button class="btn" onclick="showLoginOptions()">Login</button>
+
+  <div id="loginOptions">
+    <a href="/recruiter-login"><button class="login-choice">👨‍💼 Recruiter Login</button></a>
+    <a href="/candidate-login"><button class="login-choice">🙋‍♂️ Candidate Login</button></a>
+  </div>
+
+  <script>
+    function showLoginOptions() {
+      const options = document.getElementById("loginOptions");
+      options.style.display = "block";
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <title>Resume Matching Results</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', sans-serif;
+    }
+
+    body {
+      background: linear-gradient(to bottom, #0f172a, #1e293b);
+      color: #ffffff;
+      padding: 60px 40px;
+      min-height: 100vh;
+    }
+
+    h2 {
+      font-size: 2.2rem;
+      color: #00ffc8;
+      margin-bottom: 20px;
+    }
+
+    p {
+      font-size: 1.1rem;
+      margin-bottom: 20px;
+      color: #f1f5f9;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+      animation: fadeIn 1s ease;
+    }
+
+    th, td {
+      padding: 16px;
+      text-align: left;
+    }
+
+    th {
+      background-color: #1a1a1a;
+      color: #00ffc8;
+      border-bottom: 2px solid #00ffc8;
+    }
+
+    tr:nth-child(even) {
+      background-color: rgba(255, 255, 255, 0.04);
+    }
+
+    tr:hover {
+      background-color: rgba(0, 255, 200, 0.1);
+    }
+
+    td {
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    a {
+      display: inline-block;
+      margin-top: 30px;
+      color: #00ffc8;
+      text-decoration: none;
+      font-weight: bold;
+      font-size: 1rem;
+      transition: color 0.3s ease;
+    }
+
+    a:hover {
+      color: #66ffe6;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .no-match {
+      font-size: 1.2rem;
+      color: #f87171;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+
+  <h2>🎯 Resume Match Results</h2>
+  <p><strong>Job Description Given:</strong> {{ jd }}</p>
+
+  {% if results %}
+  <table>
+    <tr>
+      <th>Candidate Name</th>
+      <th>Email</th>
+      <th>Match Score (%)</th>
+      <th>Action</th>
+    </tr>
+  {% for r in results %}
+  <tr>
+    <td>{{ r.name }}</td>
+    <td>{{ r.email }}</td>
+    <td>{{ r.score }}%</td>
+    <td>
+      <button class="btn btn-success btn-sm" onclick="openEmailModal('{{ r.email }}', '{{ r.name }}')">📧 Send Email</button>
+    </td>
+  </tr>
+  {% endfor %}
+  </table>
+
+  <!-- Modal -->
+  <div class="modal fade" id="emailModal" tabindex="-1" aria-labelledby="emailModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <form action="/send_email" method="POST" class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="emailModalLabel">Send Email to Candidate</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <input type="hidden" name="subject" value="Regarding Your Resume Submission - ResumeScan">
+          <div class="mb-3">
+            <label for="modalEmail" class="form-label">To Email</label>
+            <input type="email" class="form-control" id="modalEmail" name="to_email" readonly>
+          </div>
+          <div class="mb-3">
+            <label for="modalMessage" class="form-label">Message</label>
+            <textarea class="form-control" id="modalMessage" name="message" rows="5" required></textarea>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-primary">Send Email</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  {% else %}
+    <p class="no-match">❌ No resumes matched.</p>
+  {% endif %}
+
+  <a href="/recruiter-dashboard">← Back to Dashboard</a>
+
+  {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+      <div class="position-fixed top-0 end-0 p-3" style="z-index: 1055">
+        {% for category, message in messages %}
+        <div id="emailToast" class="toast align-items-center text-bg-success border-0 show" role="alert" aria-live="assertive" aria-atomic="true">
+          <div class="d-flex">
+            <div class="toast-body">
+              {{ message }}
+            </div>
+            <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    {% endif %}
+  {% endwith %}
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+  const toastTrigger = document.getElementById('toast-btn');
+  const toastLiveExample = document.getElementById('emailToast');
+  if (toastTrigger && toastLiveExample) {
+    const toast = new bootstrap.Toast(toastLiveExample);
+    toast.show();
+  }
+
+  function openEmailModal(email, name) {
+    document.getElementById('modalEmail').value = email;
+    document.getElementById('modalMessage').value =
+      `Dear ${name},\n\nWe reviewed your resume and found it quite relevant to our current openings.\n\nWe’d love to connect with you further.\n\nRegards,\nResumeScan Team`;
+    const myModal = new bootstrap.Modal(document.getElementById('emailModal'));
+    myModal.show();
+  }
+</script>
+
+</body>
+</html>

@@ -1,0 +1,234 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>All Uploaded Resumes</title>
+  <style>
+    body {
+      background-color: #0f172a;
+      color: #fff;
+      font-family: 'Segoe UI', sans-serif;
+      padding: 50px 30px;
+    }
+
+    h2 {
+      text-align: center;
+      color: #00ffc8;
+      font-size: 2rem;
+      margin-bottom: 40px;
+      text-shadow: 0 0 10px rgba(0, 255, 200, 0.4);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+      background-color: #1e293b;
+      border-radius: 10px;
+      overflow: hidden;
+    }
+
+    th, td {
+      padding: 14px 18px;
+      text-align: left;
+      border-bottom: 1px solid #334155;
+    }
+
+    th {
+      background-color: #111827;
+      color: #00ffc8;
+    }
+
+    tr:nth-child(even) {
+      background-color: #1f2937;
+    }
+
+    tr:hover {
+      background-color: #374151;
+    }
+
+    .back-btn {
+      display: inline-block;
+      margin-top: 30px;
+      padding: 12px 24px;
+      background: linear-gradient(135deg, #34d399, #3b82f6);
+      color: white;
+      text-decoration: none;
+      border-radius: 8px;
+      font-weight: bold;
+      transition: all 0.3s ease;
+    }
+
+    .back-btn:hover {
+      background: linear-gradient(135deg, #3b82f6, #34d399);
+      transform: scale(1.05);
+    }
+  </style>
+</head>
+<body>
+
+  <h2>📄 All Uploaded Resumes</h2>
+
+  <table>
+    <tr>
+      <th>Name</th>
+      <th>Email</th>
+      <th>Skills</th>
+      <th>Experience</th>
+      <th>Education</th>
+    </tr>
+    {% for resume in resumes %}
+    <tr>
+      <td>{{ resume.name }}</td>
+      <td>{{ resume.email }}</td>
+      <td>{{ resume.skills }}</td>
+      <td>{{ resume.experience }}</td>
+      <td>{{ resume.education }}</td>
+    </tr>
+    {% endfor %}
+  </table>
+
+  <br><br>
+  <a href="/hr-dashboard" class="back-btn">← Back to Dashboard</a>
+
+</body>
+</html> -->
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>All Uploaded Resumes</title>
+  <style>
+    body {
+      background-color: #0f172a;
+      color: #fff;
+      font-family: 'Segoe UI', sans-serif;
+      padding: 50px 30px;
+    }
+
+    h2 {
+      text-align: center;
+      color: #00ffc8;
+      font-size: 2rem;
+      margin-bottom: 40px;
+      text-shadow: 0 0 10px rgba(0, 255, 200, 0.4);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+      background-color: #1e293b;
+      border-radius: 10px;
+      overflow: hidden;
+    }
+
+    th, td {
+      padding: 14px 18px;
+      text-align: left;
+      border-bottom: 1px solid #334155;
+      vertical-align: top;
+    }
+
+    th {
+      background-color: #111827;
+      color: #00ffc8;
+    }
+
+    tr:nth-child(even) {
+      background-color: #1f2937;
+    }
+
+    tr:hover {
+      background-color: #374151;
+    }
+
+    .back-btn {
+      display: inline-block;
+      margin-top: 30px;
+      padding: 12px 24px;
+      background: linear-gradient(135deg, #34d399, #3b82f6);
+      color: white;
+      text-decoration: none;
+      border-radius: 8px;
+      font-weight: bold;
+      transition: all 0.3s ease;
+    }
+
+    .back-btn:hover {
+      background: linear-gradient(135deg, #3b82f6, #34d399);
+      transform: scale(1.05);
+    }
+
+    .email-form {
+      margin-top: 10px;
+    }
+
+    .email-form input[type="text"],
+    .email-form textarea {
+      width: 100%;
+      padding: 8px;
+      margin-top: 5px;
+      border-radius: 6px;
+      border: none;
+      background-color: #334155;
+      color: #fff;
+    }
+
+    .email-form button {
+      margin-top: 8px;
+      padding: 8px 16px;
+      background: #10b981;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: all 0.2s ease-in-out;
+    }
+
+    .email-form button:hover {
+      background-color: #059669;
+      transform: scale(1.03);
+    }
+  </style>
+</head>
+<body>
+
+  <h2>📄 All Uploaded Resumes</h2>
+
+  <table>
+    <tr>
+      <th>Name</th>
+      <th>Email</th>
+      <th>Skills</th>
+      <th>Experience</th>
+      <th>Education</th>
+      <th>Send Email</th>
+    </tr>
+    {% for resume in resumes %}
+    <tr>
+      <td>{{ resume.name }}</td>
+      <td>{{ resume.email }}</td>
+      <td>{{ resume.skills }}</td>
+      <td>{{ resume.experience }}</td>
+      <td>{{ resume.education }}</td>
+      <td>
+        <form class="email-form" action="{{ url_for('send_email') }}" method="POST">
+          <input type="hidden" name="to_email" value="{{ resume.email }}">
+          <input type="text" name="subject" placeholder="Subject" required>
+          <textarea name="message" rows="3" placeholder="Message" required></textarea>
+          <button type="submit">Send</button>
+        </form>
+      </td>
+    </tr>
+    {% endfor %}
+  </table>
+
+  <br><br>
+  <a href="/recruiter-dashboard" class="back-btn">← Back to Dashboard</a>
+
+</body>
+</html>

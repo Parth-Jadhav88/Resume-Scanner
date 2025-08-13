@@ -1,0 +1,492 @@
+<!-- <!DOCTYPE html>
+<html>
+<head>
+    <title>Upload Resume</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; }
+        #replacePrompt { display: none; background: #f8f8f8; padding: 10px; margin-top: 10px; border: 1px solid #ccc; }
+        .error { color: red; }
+        .success { color: green; }
+    </style>
+</head>
+<body>
+
+<h2>Upload Resume</h2>
+<form id="resumeForm">
+    <input type="file" name="resume" id="resumeFile" required>
+    <button type="submit">Upload</button>
+</form>
+
+<div id="replacePrompt">
+    <p>A resume already exists for your account. Do you want to replace it?</p>
+    <button id="confirmReplace">Yes, Replace</button>
+    <button id="cancelReplace">Cancel</button>
+</div>
+
+<p id="message"></p>
+
+<script>
+document.getElementById('resumeForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    let fileInput = document.getElementById('resumeFile');
+    if (!fileInput.files.length) return;
+
+    let formData = new FormData();
+    formData.append('resume', fileInput.files[0]);
+
+    // First check if resume exists
+    fetch('/check-resume', { method: 'POST' })
+    .then(res => res.json())
+    .then(data => {
+        if (data.exists) {
+            document.getElementById('replacePrompt').style.display = 'block';
+        } else {
+            uploadFile(formData);
+        }
+    });
+});
+
+document.getElementById('confirmReplace').addEventListener('click', function() {
+    let fileInput = document.getElementById('resumeFile');
+    let formData = new FormData();
+    formData.append('resume', fileInput.files[0]);
+    uploadFile(formData);
+});
+
+document.getElementById('cancelReplace').addEventListener('click', function() {
+    document.getElementById('replacePrompt').style.display = 'none';
+    document.getElementById('message').innerHTML = '<span class="error">Upload cancelled.</span>';
+});
+
+function uploadFile(formData) {
+    fetch('/upload-resume', { method: 'POST', body: formData })
+    .then(res => res.json())
+    .then(data => {
+        if (data.success) {
+            document.getElementById('message').innerHTML = '<span class="success">' + data.message + '</span>';
+        } else {
+            document.getElementById('message').innerHTML = '<span class="error">' + (data.error || 'Upload failed') + '</span>';
+        }
+        document.getElementById('replacePrompt').style.display = 'none';
+    });
+}
+</script>
+
+</body>
+</html> -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload Resume</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(to bottom, #0a1f33, #0d1b2a);
+            color: white;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .upload-container {
+            background: rgba(13, 27, 42, 0.9);
+            padding: 30px;
+            border-radius: 14px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.6);
+            width: 400px;
+            text-align: center;
+        }
+
+        h2 {
+            font-size: 1.8rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+            text-shadow: 0px 0px 6px rgba(0, 255, 200, 0.4);
+        }
+
+        p {
+            font-size: 0.9rem;
+            margin-bottom: 20px;
+            color: #b8c6d9;
+        }
+
+        input[type="file"] {
+            display: block;
+            width: 100%;
+            margin-bottom: 15px;
+            padding: 12px;
+            border: 2px dashed rgba(0, 255, 200, 0.4);
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.05);
+            color: white;
+            cursor: pointer;
+        }
+
+        input[type="file"]::-webkit-file-upload-button {
+            background: rgba(0, 255, 200, 0.1);
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 500;
+        }
+
+        button {
+            background: linear-gradient(90deg, #007bff, #00ffcc);
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 15px;
+            font-weight: 500;
+            transition: 0.3s ease;
+            width: 100%;
+        }
+
+        button:hover {
+            box-shadow: 0 0 12px rgba(0, 255, 200, 0.6);
+        }
+
+        #replacePrompt {
+            display: none;
+            background: rgba(255, 243, 205, 0.1);
+            padding: 15px;
+            margin-top: 15px;
+            border-radius: 8px;
+            color: #ffe082;
+            font-size: 0.9rem;
+        }
+
+        #replacePrompt button {
+            width: auto;
+            margin: 5px;
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .success { color: #00ffcc; margin-top: 10px; }
+        .error { color: #ff6b6b; margin-top: 10px; }
+    </style>
+</head>
+<body>
+
+<div class="upload-container">
+    <h2>Upload Your Resume</h2>
+    <p>Supported formats: PDF, DOCX</p>
+    <form id="resumeForm">
+        <input type="file" name="resume" id="resumeFile" required>
+        <button type="submit">Upload Resume</button>
+    </form>
+
+    <div id="replacePrompt">
+        <p>A resume already exists for your account. Do you want to replace it?</p>
+        <button id="confirmReplace">Yes, Replace</button>
+        <button id="cancelReplace">Cancel</button>
+    </div>
+
+    <p id="message"></p>
+</div>
+
+<script>
+document.getElementById('resumeForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    let fileInput = document.getElementById('resumeFile');
+    if (!fileInput.files.length) return;
+
+    let formData = new FormData();
+    formData.append('resume', fileInput.files[0]);
+
+    fetch('/check-resume', { method: 'POST' })
+    .then(res => res.json())
+    .then(data => {
+        if (data.exists) {
+            document.getElementById('replacePrompt').style.display = 'block';
+        } else {
+            uploadFile(formData);
+        }
+    });
+});
+
+document.getElementById('confirmReplace').addEventListener('click', function() {
+    let fileInput = document.getElementById('resumeFile');
+    let formData = new FormData();
+    formData.append('resume', fileInput.files[0]);
+    uploadFile(formData);
+});
+
+document.getElementById('cancelReplace').addEventListener('click', function() {
+    document.getElementById('replacePrompt').style.display = 'none';
+    document.getElementById('message').innerHTML = '<span class="error">Upload cancelled.</span>';
+});
+
+function uploadFile(formData) {
+    fetch('/upload-resume', { method: 'POST', body: formData })
+    .then(res => res.json())
+    .then(data => {
+        if (data.success) {
+            document.getElementById('message').innerHTML = '<span class="success">' + data.message + '</span>';
+        } else {
+            document.getElementById('message').innerHTML = '<span class="error">' + (data.error || 'Upload failed') + '</span>';
+        }
+        document.getElementById('replacePrompt').style.display = 'none';
+    });
+}
+</script>
+
+</body>
+</html> -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload Resume</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(to bottom, #0a1f33, #0d1b2a);
+            color: white;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* Title */
+        .page-title {
+            font-size: 3rem;
+            font-weight: 800;
+            margin-bottom: 10px;
+            text-shadow: 0px 0px 10px rgba(255, 255, 255, 0.3);
+            color: white;
+            text-align: center;
+        }
+
+        /* Subtitle */
+        .page-subtitle {
+    font-size: 1.3rem; 
+    font-weight: 400;
+    margin-bottom: 30px;
+    color: white;
+    opacity: 0.9; 
+    text-align: center;
+}
+
+        .upload-container {
+            background: rgba(13, 27, 42, 0.9);
+            padding: 40px;
+            border-radius: 14px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.6);
+            width: 500px;
+            text-align: center;
+        }
+
+        h2 {
+            font-size: 1.8rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+            text-shadow: 0px 0px 6px rgba(0, 255, 200, 0.4);
+        }
+
+        p {
+            font-size: 1rem;
+            margin-bottom: 20px;
+            color: #b8c6d9;
+        }
+
+        input[type="file"] {
+            display: block;
+            width: 100%;
+            margin-bottom: 15px;
+            padding: 14px;
+            border: 2px dashed rgba(0, 255, 200, 0.4);
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.05);
+            color: white;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+
+        input[type="file"]::-webkit-file-upload-button {
+            background: rgba(0, 255, 200, 0.1);
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 500;
+        }
+
+        button {
+            background: linear-gradient(90deg, #007bff, #00ffcc);
+            color: white;
+            padding: 14px 20px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 500;
+            transition: 0.3s ease;
+            width: 100%;
+        }
+
+        button:hover {
+            box-shadow: 0 0 12px rgba(0, 255, 200, 0.6);
+        }
+
+        #replacePrompt {
+            display: none;
+            background: rgba(255, 243, 205, 0.1);
+            padding: 15px;
+            margin-top: 15px;
+            border-radius: 8px;
+            color: #ffe082;
+            font-size: 0.9rem;
+        }
+
+        #replacePrompt button {
+            width: auto;
+            margin: 5px;
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .success { color: #00ffcc; margin-top: 10px; }
+        .error { color: #ff6b6b; margin-top: 10px; }
+    </style>
+</head>
+<body>
+
+<h1 class="page-title">⚙️Smart Resume Scanner</h1>
+<p class="page-subtitle">Bridge the gap between HR and candidates using AI-powered resume analysis</p>
+
+<div class="upload-container">
+    <h2>Upload Your Resume</h2>
+    <p>Supported formats: PDF, DOCX</p>
+    <form id="resumeForm">
+        <input type="file" name="resume" id="resumeFile" required>
+        <button type="submit">Upload Resume</button>
+    </form>
+
+    <div id="replacePrompt">
+        <p>A resume already exists for your account. Do you want to replace it?</p>
+        <button id="confirmReplace">Yes, Replace</button>
+        <button id="cancelReplace">Cancel</button>
+    </div>
+
+    <p id="message"></p>
+</div>
+
+<script>
+document.getElementById('resumeForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    let fileInput = document.getElementById('resumeFile');
+    if (!fileInput.files.length) return;
+
+    let formData = new FormData();
+    formData.append('resume', fileInput.files[0]);
+
+    fetch('/check-resume', { method: 'POST' })
+    .then(res => res.json())
+    .then(data => {
+        if (data.exists) {
+            document.getElementById('replacePrompt').style.display = 'block';
+        } else {
+            uploadFile(formData);
+        }
+    });
+});
+
+document.getElementById('confirmReplace').addEventListener('click', function() {
+    let fileInput = document.getElementById('resumeFile');
+    let formData = new FormData();
+    formData.append('resume', fileInput.files[0]);
+    uploadFile(formData);
+});
+
+document.getElementById('cancelReplace').addEventListener('click', function() {
+    document.getElementById('replacePrompt').style.display = 'none';
+    document.getElementById('message').innerHTML = '<span class="error">Upload cancelled.</span>';
+});
+
+function uploadFile(formData) {
+    fetch('/upload-resume', { method: 'POST', body: formData })
+    .then(res => res.json())
+    .then(data => {
+        if (data.success) {
+            document.getElementById('message').innerHTML = '<span class="success">' + data.message + '</span>';
+        } else {
+            document.getElementById('message').innerHTML = '<span class="error">' + (data.error || 'Upload failed') + '</span>';
+        }
+        document.getElementById('replacePrompt').style.display = 'none';
+    });
+}
+</script>
+
+</body>
+</html>
